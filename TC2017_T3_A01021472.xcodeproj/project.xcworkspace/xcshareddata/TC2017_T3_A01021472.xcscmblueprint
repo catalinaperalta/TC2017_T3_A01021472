@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "CBE4FEC1462DB266539DF356B0EC71CC0FFCC337",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9C804E865BDC71A8F0417598A98A062D6B276BDF" : 0,
+    "CBE4FEC1462DB266539DF356B0EC71CC0FFCC337" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C34B3D63-DA25-44F3-9CF8-39F6FFFC7A44",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9C804E865BDC71A8F0417598A98A062D6B276BDF" : "..",
+    "CBE4FEC1462DB266539DF356B0EC71CC0FFCC337" : "TC2017_T3_A01021472\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "TC2017_T3_A01021472",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TC2017_T3_A01021472.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/catalinaperalta\/AlgoritmosDeOrdenamiento.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9C804E865BDC71A8F0417598A98A062D6B276BDF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/catalinaperalta\/TC2017_T3_A01021472.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CBE4FEC1462DB266539DF356B0EC71CC0FFCC337"
+    }
+  ]
+}

@@ -10,6 +10,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <math.h>
 
 #define N 4
 
@@ -21,6 +22,7 @@ void parejasEstables(int M[N][N], int H[N][N]);
 int main(int argc, const char * argv[])
 {
 //-------------------------------------CAMIONERO CON PRISA---------------------------------------------
+    std::cout<<std::endl<<"CAMIONERO CON PRISA-------------------"<<std::endl;
     std::vector<int> ruta;
     
     int gasolineras[6] = {100, 250, 120, 200, 300, 95};
@@ -36,10 +38,11 @@ int main(int argc, const char * argv[])
         std::cout<<"Se hará una parada en la "<<i<<" gasolinera."<<std::endl;
 
 //-------------------------------------DIVISION DE PARRAFOS------------------------------------------------------
-    
-    divisionParrafos("the quick brown fox has over the lazy og");
+    std::cout<<std::endl<<"DIVISION DE PARRAFOS-------------------"<<std::endl;
+    divisionParrafos("Do I contradict myself? I am large, I contain multitudes.");
     
 //-------------------------------------SUBSEQUENCIA COMUN MAXIMA---------------------------------------------
+    std::cout<<std::endl<<"SUBSECUENCIA COMUN MAXIMA--------------"<<std::endl;
     std::vector<int> S;
     std::vector<int> P;
     int t[10] = {2,4,5,3,6,7,0,2,1,3};
@@ -58,28 +61,28 @@ int main(int argc, const char * argv[])
     subseqMax(S, P);
     
 //-------------------------------------PAREJAS ESTABLES---------------------------------------------
+    std::cout<<std::endl<<"PAREJAS ESTABLES-----------------------"<<std::endl;
     int M[N][N];
     int H[N][N];
-//    srand((int) time(NULL));
     
-    int HzeroPref[N] = {2,1,0,3};
-    int HonePref[N] = {1,3,0,2};
-    int HtwoPref[N] = {2,0,3,1};
-    int HthreePref[N] = {0, 1, 2, 3};
-    
-    int MzeroPref[N] = {0,2,1,3};
-    int MonePref[N] = {2,3,1,0};
-    int MtwoPref[N] = {1,2,3,0};
-    int MthreePref[N] = {3,1,0,2};
-//    int MzeroPref[N] = {1,3,2,0};
-//    int MonePref[N] = {2,0,3,1};
-//    int MtwoPref[N] = {1,2,3,0};
-//    int MthreePref[N] = {0,1,3,2};
+//    int HzeroPref[N] = {2,1,0,3};
+//    int HonePref[N] = {1,3,0,2};
+//    int HtwoPref[N] = {2,0,3,1};
+//    int HthreePref[N] = {0, 1, 2, 3};
 //    
-//    int HzeroPref[N] = {0,1,2,3};
-//    int HonePref[N] = {2,1,0,3};
-//    int HtwoPref[N] = {0,2,1,3};
-//    int HthreePref[N] = {1,3,0,2};
+//    int MzeroPref[N] = {0,2,1,3};
+//    int MonePref[N] = {2,3,1,0};
+//    int MtwoPref[N] = {1,2,3,0};
+//    int MthreePref[N] = {3,1,0,2};
+    int MzeroPref[N] = {1,3,2,0};
+    int MonePref[N] = {2,0,3,1};
+    int MtwoPref[N] = {1,2,3,0};
+    int MthreePref[N] = {0,1,3,2};
+    
+    int HzeroPref[N] = {0,1,2,3};
+    int HonePref[N] = {2,1,0,3};
+    int HtwoPref[N] = {0,2,1,3};
+    int HthreePref[N] = {1,3,0,2};
     
     for (int i = 0; i<N; i++)
     {
@@ -101,6 +104,7 @@ int main(int argc, const char * argv[])
 
 std::vector<int> camionero(int tank, std::vector<int> ruta)
 {
+//Complejidad: O(n)
     std::vector<int> paradas;
     int distPorRecorrer = 0;
     
@@ -119,10 +123,11 @@ std::vector<int> camionero(int tank, std::vector<int> ruta)
 
 void divisionParrafos(std::string parrafo)
 {
-    int L = 20;
-    int b = 1;
+//Complejidad: O(n)
+    float L = 20;
+    float b = 1;
     int rb;
-    int total = 0;
+    float total = 0;
     std::vector<int> badnessPerLine;
     int totalBadness = 0;
     
@@ -132,83 +137,62 @@ void divisionParrafos(std::string parrafo)
 //-----------------------------------------OBTENER STRING DE PALABRAS---------------------------------------
     std::string word;
     std::stringstream par(parrafo);
+    float spaces = 0;
+    float bL = 0;
+    float bM = 0;
     
     while (std::getline(par, word, ' '))
     {
         words.push_back(word);
     }
 
-//------------------------------------AGRUPAR PALABRAS EN LINEAS---------------------------------------------
     std::vector<std::string> temp;
-    
+
+//-------------------------------SEPARACION DE LINEAS Y CALCULO DE COSTO------------------------------------
     for (int i = 0; i<words.size(); i++)
     {
-        if (total > L)
+        spaces = ((float)temp.size()-1.0)*(float)b;
+        
+        if (total+spaces > L)
         {
-            for (auto i : temp)
-                std::cout<<i<<" ";
-            std::cout<<std::endl;
+            bL = b - (((total+spaces)-L)/(temp.size()-1));
+            bM = b + (L-((total-words[i-1].length())+((temp.size()-2)*b)))/(temp.size()-2);
+            
+            if(((fabs(bM-b)*(temp.size()-1)) > (fabs(bL-b)*(temp.size()-1))) && bL > 0)
+            {
+                for (auto i : temp)
+                    std::cout<<i<<" ";
+                std::cout<<"Redujo: "<<bL<<std::endl;
+                temp.clear();
+            }
+            else
+            {
+                temp.pop_back();
+                for (auto i : temp)
+                    std::cout<<i<<" ";
+                std::cout<<"Amplio: "<<bM<<std::endl;
+                temp.clear();
+                temp.push_back(words[i-1]);
+            }
+            total = 0;
+            
         }
         else
         {
             total += words[i].length();
+            
         }
+        temp.push_back(words[i]);
     }
     
-    
-//-------------------------PREVIOUS WAY------------------------------PREVIOUS WAY--------------------
-//    
-//    for (int i = 0; i<words.size(); i++)
-//    {
-//        if (total > L-temp.size() || (i == words.size()-1 && L-temp.size() > words[i].length()))
-//        {
-//            lineas.push_back(temp);
-//            if (i == words.size()-1)
-//            {
-//                badnessPerLine.push_back(0);
-//            }
-//            badnessPerLine.push_back((L-total)/(i-(i-temp.size())));
-//            temp.clear();
-//            total = 0;
-//            if (i == words.size()-1)
-//            {
-//                temp.push_back(words[i]);
-//                lineas.push_back(temp);
-//            }
-//            else
-//            {
-//                i = i-1;
-//            }
-//            
-//            
-//        }
-//        else if (total <= L)
-//        {
-//            total += words[i].length();
-//            temp.push_back(words[i]);
-//        }
-//    }
-//    
-////----------------------------FIXFIXFIXFIXFIXFIXFIX--------------------------------------------------
-//    for (auto i : badnessPerLine)
-//    {
-//        std::cout<<"BPL:"<<i<<std::endl;
-//        totalBadness = totalBadness + i;
-//    }
-//    std::cout<<totalBadness<<std::endl;
-//    for(auto i : lineas)
-//    {
-//        for (auto j : i)
-//        {
-//            std::cout<<j;
-//        }
-//        std::cout<<std::endl;
-//    }
-    
+    for (auto i : temp)
+        std::cout<<i<<" ";
+    std::cout<<"Costo: 0"<<std::endl;
 }
 
 void subseqMax(std::vector<int> X, std::vector<int> Y)
 {
+//Complejidad: O(mn^2)
 //------------------------------------SUBSEQUENCIA MÁXIMA COMÚN CONTIGUA------------------------------------
     std::vector<int> longestSoFar;
     std::vector<int> subsequence;
@@ -220,7 +204,7 @@ void subseqMax(std::vector<int> X, std::vector<int> Y)
         
         for (int j = 0; j<Y.size(); j++)
         {
-            m = j;
+            m=j;
             
             while(X[k] == Y[m])
             {
@@ -244,25 +228,54 @@ void subseqMax(std::vector<int> X, std::vector<int> Y)
     }
     std::cout<<std::endl;
 //------------------------------SUBSEQUENCIA MÁXIMA COMÚN NO CONTIGUA------------------------------------
-    int count[X.size()][Y.size()];
-    
-    for (int i = X.size()-1; i>=0; i--)
-    {
-        for (int j = X.size()-1; j>=0; j--)
-        {
-            if (i == X.size()-1 || j == Y.size()-1)
-            {
-                count[i][j] = 0;
-            }
-            
-            
-        }
-    }
-    
+//
+//
+//    int num[X.size()][Y.size()];
+//
+//    int tot = 0;
+//
+//    for(int i = 0; i<=X.size(); i++)
+//
+//    {
+//
+//        for(int j = 0; j<=Y.size(); j++)
+//
+//        {
+//
+//            if(i == 0 || j == 0)
+//            {
+//                num[i][j] = 0;
+//
+//            }
+//            else if(X[i-1] == Y[j-1])
+//            {
+//                num[i][j] = num[i-1][j-1] + 1;
+//            }
+//            else if(num[i-1][j] > num[i][j-1])
+//            {
+//                num[i][j] = num[i-1][j];
+//            }
+//            else
+//                num[i][j] = num[i][j-1];
+//
+//        }
+//
+//    }
+//
+//    for (int i = 0; i<X.size(); i++)
+//    {
+//        for (int j = 0; j<Y.size(); j++)
+//        {
+//            std::cout<<num[i][j]<<" ";
+//        }
+//        std::cout<<std::endl;
+//    }
+
 }
 
 void parejasEstables(int M[N][N], int H[N][N])
 {
+//Complejidad: O(n^2)
     bool stable = false;
     int Mmatched[N];
     bool Hmatched[N];
